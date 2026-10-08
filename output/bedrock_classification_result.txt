@@ -1,0 +1,45 @@
+
+Loaded: 30 meeting minutes
+
+ID= 7 | Human=AWS/Infrastructure | Bedrock=AWS/Infrastructure | OK
+ID= 8 | Human=AWS/Infrastructure | Bedrock=Security           | NG
+ID= 9 | Human=AWS/Infrastructure | Bedrock=Security           | NG
+ID=10 | Human=AWS/Infrastructure | Bedrock=Security           | NG
+ID=11 | Human=AWS/Infrastructure | Bedrock=Security           | NG
+ID=12 | Human=AWS/Infrastructure | Bedrock=Security           | NG
+ID=13 | Human=AWS/Infrastructure | Bedrock=Security           | NG
+ID=14 | Human=AWS/Infrastructure | Bedrock=AWS/Infrastructure | OK
+ID=15 | Human=AWS/Infrastructure | Bedrock=AWS/Infrastructure | OK
+ID=16 | Human=AWS/Infrastructure | Bedrock=AWS/Infrastructure | OK
+ID=17 | Human=AI/Analytics        | Bedrock=AI/Analytics        | OK
+ID=18 | Human=AI/Analytics        | Bedrock=AI/Analytics        | OK
+ID=19 | Human=AI/Analytics        | Bedrock=AI/Analytics        | OK
+ID=20 | Human=AI/Analytics        | Bedrock=AI/Analytics        | OK
+ID=21 | Human=AI/Analytics        | Bedrock=AI/Analytics        | OK
+ID=22 | Human=AI/Analytics        | Bedrock=AI/Analytics        | OK
+ID=23 | Human=AI/Analytics        | Bedrock=AI/Analytics        | OK
+ID=24 | Human=AI/Analytics        | Bedrock=AI/Analytics        | OK
+ID=25 | Human=AI/Analytics        | Bedrock=AI/Analytics        | OK
+ID=26 | Human=AI/Analytics        | Bedrock=AI/Analytics        | OK
+ID=27 | Human=Security            | Bedrock=Security            | OK
+ID=28 | Human=Security            | Bedrock=Security            | OK
+ID=29 | Human=Security            | Bedrock=Security            | OK
+ID=30 | Human=Security            | Bedrock=Security            | OK
+ID=31 | Human=Security            | Bedrock=Security            | OK
+ID=32 | Human=Security            | Bedrock=Security            | OK
+ID=33 | Human=Security            | Bedrock=Security            | OK
+ID=34 | Human=Security            | Bedrock=Security            | OK
+ID=35 | Human=Security            | Bedrock=Security            | OK
+ID=36 | Human=Security            | Bedrock=Security            | OK
+
+=== CLASSIFICATION RESULTS ===
+Processed : 30
+Correct   : 24
+Incorrect : 6
+Accuracy  : 80.00%
+
+Note:
+These results were obtained from the original Japanese-language
+meeting minutes dataset. Category labels have been translated
+into English for international portfolio presentation.
+No additional Amazon Bedrock inference was performed.

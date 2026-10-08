@@ -1,0 +1,22 @@
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local backups
+*.backup
+README.backup.md

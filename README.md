@@ -4,6 +4,8 @@
 
 An end-to-end cloud and generative AI engineering portfolio project that automatically classifies Japanese meeting minutes stored in Amazon RDS for PostgreSQL using **Amazon Bedrock (Amazon Nova Micro)** and visualizes document relationships using **TF-IDF and UMAP**.
 
+**English edition and measurement provenance:** The published results are English translations/presentations of measurements made on the original Japanese dataset. Document IDs, predictions, counts, accuracy, UMAP coordinates, and clustering scores have not been recalculated. The included Python script is a separate English-language demo; its results must be measured independently. See [the English-edition audit](docs/english-edition-audit.md).
+
 ## 1. Project Overview
 
 This project demonstrates the integration of AWS cloud infrastructure, private database connectivity, generative AI, Python automation, data visualization, and classification evaluation.
@@ -84,7 +86,7 @@ The Python application invokes Amazon Bedrock directly using boto3.
 | Programming | Python | Data processing and automation |
 | AWS SDK | boto3 | Bedrock API integration |
 | Database Driver | psycopg2 | PostgreSQL operations |
-| Japanese NLP | SudachiPy | Tokenization |
+| Japanese NLP (original experiment) | SudachiPy | Tokenization of the measured Japanese dataset |
 | Feature Extraction | TF-IDF | Text vectorization |
 | Dimensionality Reduction | UMAP | Two-dimensional document mapping |
 | Visualization | Matplotlib / SciPy | Classification visualization |
@@ -117,7 +119,7 @@ Ground-truth labels are used for evaluation and are not provided to the model as
 
 ## 5. Evaluation Results
 
-Amazon Nova Micro classified all 30 synthetic meeting minutes.
+Amazon Nova Micro classified all 30 synthetic Japanese meeting minutes in the original measured experiment. The following results are translated for this English edition; they are not results from running the English demo.
 
 ### Classification Accuracy
 
@@ -163,7 +165,9 @@ Amazon Nova Micro performs the actual classification.
 
 TF-IDF and UMAP are used for feature representation and visualization, not for determining the predicted category.
 
-The visualized dataset contains Japanese documents, while this README provides English documentation for international audiences.
+The published map presents the original Japanese-document experiment in English. Its saved coordinates and predictions are reused; translating labels does not produce a new model evaluation. The UMAP axes have no inherent semantic meaning.
+
+Additional historical reports are available in [analysis_result.txt](output/analysis_result.txt) and [bedrock_clustering_evaluation.txt](output/bedrock_clustering_evaluation.txt). The TF-IDF/UMAP/HDBSCAN report records ARI 0.4493 and NMI 0.6184. The separate Bedrock clustering experiment records ARI 1.0000, NMI 1.0000, and agreement 30/30 (100.00%). These are separate clustering experiments and must not be confused with the classification accuracy above.
 
 ## 7. Development Environment
 
@@ -177,10 +181,14 @@ The visualized dataset contains Japanese documents, while this README provides E
 
 ## 8. Getting Started
 
+This workflow creates and processes **30 synthetic English documents**, using titles prefixed with `[EN-DEMO2026] `. It is a separate experiment from the saved Japanese-data results above. The script selects only these prefixed records and saves new English-demo outputs under different filenames.
+
+The database must already contain a `meeting_minutes` table with an automatically generated `id` and the columns `meeting_date`, `title`, `content`, and `category`. The seed command adds `ai_category` if needed. AWS credentials, Bedrock model access, and an SSM connection to the private database are required. Running classification invokes Amazon Bedrock and can incur AWS charges.
+
 ### 8.1 Install Dependencies
 
 ```powershell
-python -m pip install boto3 psycopg2-binary python-dotenv numpy scipy scikit-learn umap-learn sudachipy sudachidict-core matplotlib
+python -m pip install -r requirements.txt
 ```
 
 ### 8.2 Configure Environment Variables
@@ -232,13 +240,15 @@ python .\src\demo_bedrock_pipeline.py classify
 python .\src\demo_bedrock_pipeline.py visualize
 ```
 
-### 8.7 View the Saved Classification Map
+### 8.7 View the Newly Generated English-Demo Map
 
 ```powershell
-Start-Process .\output\bedrock_classification_map.png
+Start-Process .\output\english_classification_map.png
 ```
 
-**Note:** The published classification map is an existing project artifact. The visualization command may require troubleshooting or adjustments to reproduce the exact saved image in another environment.
+The visualization command also writes `output/english_classification_evaluation.txt`. These files contain new measurements for the English demo. No English-demo accuracy is claimed until that workflow has been run and evaluated.
+
+The published `output/bedrock_classification_map.png` is the historical Japanese-data map with English presentation. The English-demo command does not reproduce that experiment or overwrite that file.
 
 ## 9. Repository Structure
 
@@ -248,30 +258,26 @@ aws-bedrock-minutes-analytics/
 ├── .gitignore
 ├── .env.example
 ├── requirements.txt
+├── docs/
+│   └── english-edition-audit.md
 ├── src/
-│   ├── analysis.py
-│   ├── bedrock_classifier.py
-│   ├── bedrock_clustering.py
-│   ├── demo_bedrock_pipeline.py
-│   ├── evaluate_bedrock_clustering.py
-│   ├── visualize_bedrock_classification.py
-│   └── visualize_bedrock_clustering.py
+│   └── demo_bedrock_pipeline.py
 └── output/
     ├── analysis_result.txt
     ├── bedrock_classification_map.png
     ├── bedrock_classification_result.txt
-    ├── bedrock_clustering_evaluation.txt
-    ├── bedrock_clustering_result.json
-    └── bedrock_clustering_result.txt
+    └── bedrock_clustering_evaluation.txt
 ```
 
 ### Main Demonstration Script
 
 `src/demo_bedrock_pipeline.py`
 
-This script provides the demonstration commands for dataset creation, Bedrock classification, and visualization.
+The script provides English-demo commands for dataset creation, Bedrock classification, and visualization. Its comments, prompts, synthetic documents, console messages, and generated report labels are in English.
 
-The repository also includes scripts and output artifacts from separate document clustering experiments.
+The committed text reports are translations of historical Japanese-data experiments. The original Japanese analysis and clustering scripts are available in the [Japanese repository](https://github.com/mika-it-labs/minutes-analytics); they are not included in this English edition. Image paths printed inside the historical analysis log record files saved during that original run; those additional images are not included here.
+
+New demo runs additionally generate `output/english_classification_map.png` and `output/english_classification_evaluation.txt`.
 
 ## 10. Security Considerations
 

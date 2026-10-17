@@ -1,0 +1,13 @@
+=== BEDROCK CLUSTERING EVALUATION ===
+Documents : 30
+Clusters  : 3
+ARI       : 1.0000
+NMI       : 1.0000
+Agreement : 30/30 (100.00%)
+
+Translation note:
+This saved report evaluates a separate Bedrock clustering experiment on the
+original synthetic Japanese meeting minutes. It is presented in English;
+document counts, cluster counts, scores, and agreement are unchanged.
+These are clustering results, not the document-classification accuracy.
+No clustering, evaluation, or model inference was rerun for this translation.

@@ -1,3 +1,10 @@
+"""Run a separate synthetic English meeting-minutes demonstration.
+
+The committed bedrock_* reports and map document the original Japanese-data
+experiment in English. This script does not reproduce those measurements.
+Its English-demo results are computed independently and saved as english_*.
+Only records with the EN-DEMO2026 title prefix are selected.
+"""
 
 import io
 import sys
@@ -567,6 +574,7 @@ def visualize(conn):
     report = (
         "Amazon Bedrock / Amazon Nova Micro\n"
         "Dataset: 30 Synthetic English Meeting Minutes\n"
+        "Measurement: Independent English demo; not the translated Japanese results.\n"
         f"Documents: {len(rows)}\n"
         f"Correct: {correct}\n"
         f"Incorrect: {incorrect}\n"

@@ -1,4 +1,3 @@
-
 Loaded 30 labeled meeting minutes from RDS.
 TF-IDF matrix: 30 documents x 212 terms
 
@@ -108,3 +107,13 @@ Saved: output/tfidf_heatmap.png
 
 === Analysis Complete ===
 Check the output directory.
+
+Translation note:
+This is an English translation of a saved analysis of the original synthetic
+Japanese meeting minutes. Titles, category labels, and keyword tokens are
+rendered in English. Keywords are glosses of the original Japanese features,
+not terms extracted from an English corpus. Document IDs, cluster assignments,
+UMAP coordinates, counts, scores, keyword ranks, and weights are unchanged.
+No analysis or model inference was rerun for this translation.
+The Saved lines above are historical log entries; those images are not
+included in this English edition.

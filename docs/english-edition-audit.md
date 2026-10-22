@@ -4,7 +4,8 @@ Audit date: 2026-10-17
 
 ## Scope and source snapshots
 
-- English repository: [mika-it-labs/aws-bedrock-minutes-analytics](https://github.com/mika-it-labs/aws-bedrock-minutes-analytics), inspected at `dedf948d043765e8cc145664117abb4de067b1d8`.
+- English repository: [mika-it-labs/aws-bedrock-minutes-analytics](https://github.com/mika-it-labs/aws-bedrock-minutes-analytics), inspected at the pre-change snapshot `dedf948d043765e8cc145664117abb4de067b1d8`.
+- The resulting editorial changes are recorded in [commit ad59ac3](https://github.com/mika-it-labs/aws-bedrock-minutes-analytics/commit/ad59ac3ae39f9e8b62b9d2be0be38151630d4a03). The pre-change snapshot above is the audit baseline, not the resulting revision.
 - Original Japanese repository: [mika-it-labs/minutes-analytics](https://github.com/mika-it-labs/minutes-analytics), read only at `1c2c09d42d163cd370cbb311db1e0892d5f52ce2`.
 - The audit covered every tracked text file and visually inspected the published classification PNG. Git history was not rewritten.
 
@@ -45,7 +46,7 @@ No Amazon Bedrock inference, database writes, feature extraction, dimensionality
 
 The existing demo processes only records whose titles start with `[EN-DEMO2026] `. Its categories are `Infrastructure`, `AI & Analytics`, and `Security`; these names intentionally remain unchanged because they are used in stored demo records.
 
-The demo writes `english_classification_map.png` and `english_classification_evaluation.txt`. It computes its own results and does not establish or reproduce the historical Japanese-data accuracy. Follow the README for its separate AWS and database prerequisites.
+The demo writes `output/english_classification_map.png` and `output/english_classification_evaluation.txt`. It computes its own results and does not establish or reproduce the historical Japanese-data accuracy. The `classify` command reuses valid stored English-demo predictions and invokes Bedrock only when a valid prediction is missing. The `visualize` command recomputes metrics from stored predictions and overwrites both English-demo output files without invoking Bedrock. A regenerated report is therefore not evidence of a fresh inference run. Follow the README for its separate AWS and database prerequisites, repository-root working directory, and example table definition.
 
 The Japanese experiment scripts listed in the previous README are not present in this English repository snapshot. This update documents that fact instead of implying that those scripts or missing images are included.
 

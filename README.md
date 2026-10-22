@@ -185,6 +185,33 @@ This workflow creates and processes **30 synthetic English documents**, using ti
 
 The database must already contain a `meeting_minutes` table with an automatically generated `id` and the columns `meeting_date`, `title`, `content`, and `category`. The seed command adds `ai_category` if needed. AWS credentials, Bedrock model access, and an SSM connection to the private database are required. Running classification invokes Amazon Bedrock and can incur AWS charges.
 
+### Prerequisites and Working Directory
+
+Run all PowerShell and Python commands below from the root of this repository.
+
+Before starting, prepare:
+
+- Python and the dependencies in `requirements.txt`.
+- The [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and the [Session Manager plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html) on the local computer.
+- An authenticated AWS profile with permissions for the SSM session and the configured Bedrock model.
+- An SSM-managed EC2 instance that meets the [Session Manager prerequisites](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-prerequisites.html) and can reach the private RDS endpoint on port 5432.
+
+For a new demo database, the following SQL is an example of the minimum table structure compatible with this script. Run it in the intended PostgreSQL database before `seed`; it is not a migration for an existing table.
+
+```sql
+CREATE TABLE meeting_minutes (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    meeting_date DATE NOT NULL,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    category VARCHAR(50) NOT NULL
+);
+```
+
+The database user must be able to select, insert, and update demo records, and to add the `ai_category` column during `seed`.
+
+The English demo stores the exact category names `Infrastructure`, `AI & Analytics`, and `Security`. These differ from the translated historical labels `AWS / Infrastructure` and `AI / Analytics` shown above.
+
 ### 8.1 Install Dependencies
 
 ```powershell
@@ -234,6 +261,8 @@ python .\src\demo_bedrock_pipeline.py seed
 python .\src\demo_bedrock_pipeline.py classify
 ```
 
+The `classify` command reuses a stored prediction when it is already one of the three valid English-demo categories; it invokes Bedrock only for records without a valid prediction. Re-running the command does not necessarily perform new inference. The `seed` command also reuses an existing set of 30 prefixed demo records rather than inserting another set.
+
 ### 8.6 Run the Visualization Workflow
 
 ```powershell
@@ -246,7 +275,7 @@ python .\src\demo_bedrock_pipeline.py visualize
 Start-Process .\output\english_classification_map.png
 ```
 
-The visualization command also writes `output/english_classification_evaluation.txt`. These files contain new measurements for the English demo. No English-demo accuracy is claimed until that workflow has been run and evaluated.
+The visualization command also writes `output/english_classification_evaluation.txt`. These files contain independently calculated English-demo metrics based on the predictions currently stored in the database. Re-running `visualize` overwrites both English-demo output files and recomputes the metrics and visualization; it does not invoke Bedrock. Regenerating outputs therefore does not imply a fresh inference run. No English-demo accuracy is claimed until that workflow has been run and evaluated.
 
 The published `output/bedrock_classification_map.png` is the historical Japanese-data map with English presentation. The English-demo command does not reproduce that experiment or overwrite that file.
 
